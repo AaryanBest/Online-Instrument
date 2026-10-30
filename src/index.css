@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #10201F;
+  --paper: #F6F8F7;
+  --teal: #007A75;
+  --signal: #2CCFC0;
+  --slate: #54625F;
+  --rule: #D5DDDB;
+  --logic: #4F81BD;
+  --make: #7F52A0;
+  --status-ok: #2E8B57;
+  --status-wait: #E8A317;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background-color: var(--paper);
+}
+
+@theme {
+  --color-ink: #10201F;
+  --color-paper: #F6F8F7;
+  --color-teal: #007A75;
+  --color-signal: #2CCFC0;
+  --color-slate: #54625F;
+  --color-rule: #D5DDDB;
+  --color-logic: #4F81BD;
+  --color-make: #7F52A0;
+  --color-status-ok: #2E8B57;
+  --color-status-wait: #E8A317;
+  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--paper);
+  color: var(--ink);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Floor plan drawing animation */
+@keyframes drawStroke {
+  from {
+    stroke-dashoffset: 1200;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes zoneFadeIn {
+  0% {
+    fill-opacity: 0;
+  }
+  65% {
+    fill-opacity: 0;
+  }
+  100% {
+    fill-opacity: 0.12;
+  }
+}
+
+.plan-stroke-wall {
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 0;
+  animation: drawStroke 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.plan-zone {
+  animation: zoneFadeIn 1.4s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plan-stroke-wall,
+  .plan-zone {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    fill-opacity: 0.12 !important;
+  }
+}

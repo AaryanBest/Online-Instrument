@@ -1,0 +1,6 @@
+{
+  "name": "Online Instruments — Audio-Visual System Integrator",
+  "description": "B2B Audio-Visual system integrator headquartered in Bengaluru since 2006. Enterprise AV consultancy, engineering design, supply, rack staging, commissioning, and support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
