@@ -6,6 +6,7 @@ import { OfficeList } from '../components/sections/OfficeList';
 import { AwardList } from '../components/sections/AwardList';
 import { PartnerWall } from '../components/sections/PartnerWall';
 import { ContactBand } from '../components/sections/ContactBand';
+import { Logo } from '../components/ui/Logo';
 
 interface AboutPageProps {
   onNavigate: (path: string) => void;
@@ -203,6 +204,11 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
                     {item.status}
                   </span>
                 </div>
+                {item.standard === 'ISO 9001:2015' && (
+                  <div className="py-1 h-8 flex items-center">
+                    <Logo id="iso9001" tone="light" className="h-6 max-w-[100px]" />
+                  </div>
+                )}
                 {item.certifier && (
                   <p className="text-xs text-[#54625F]">Certifying authority: {item.certifier}</p>
                 )}

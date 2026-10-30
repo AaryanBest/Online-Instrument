@@ -5,6 +5,8 @@ import { RackStagingComparison } from '../components/sections/RackStagingCompari
 import { TestReportsExcerpt } from '../components/sections/TestReportsExcerpt';
 import { supportIncidentSteps, escalationMatrix } from '../content/process';
 import { ContactBand } from '../components/sections/ContactBand';
+import { Logo } from '../components/ui/Logo';
+import { brandToLogoMap } from '../content/logos';
 
 interface HowWeWorkPageProps {
   onNavigate: (path: string) => void;
@@ -90,17 +92,24 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({ onNavigate }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#D5DDDB]">
-                {hardwareTrackingSample.map((item) => (
-                  <tr key={item.id} className="hover:bg-[#F6F8F7]/50">
-                    <td className="py-3 px-4 font-mono text-xs font-semibold text-[#007A75]">
-                      {item.id}
-                    </td>
-                    <td className="py-3 px-4 font-medium text-[#10201F]">
-                      {item.itemDescription}
-                    </td>
-                    <td className="py-3 px-4 text-[#54625F]">
-                      {item.makeModel}
-                    </td>
+                {hardwareTrackingSample.map((item) => {
+                  const brandKey = Object.keys(brandToLogoMap).find(b => item.makeModel.toLowerCase().includes(b.toLowerCase()));
+                  const logoId = brandKey ? brandToLogoMap[brandKey] : null;
+
+                  return (
+                    <tr key={item.id} className="hover:bg-[#F6F8F7]/50">
+                      <td className="py-3 px-4 font-mono text-xs font-semibold text-[#007A75]">
+                        {item.id}
+                      </td>
+                      <td className="py-3 px-4 font-medium text-[#10201F]">
+                        {item.itemDescription}
+                      </td>
+                      <td className="py-3 px-4 text-[#54625F]">
+                        <div className="flex items-center gap-2">
+                          {logoId && <Logo id={logoId} tone="light" className="h-4 max-w-[65px] shrink-0" />}
+                          <span className="font-medium text-[#10201F]">{item.makeModel}</span>
+                        </div>
+                      </td>
                     <td className="py-3 px-4 text-xs text-[#54625F]">
                       {item.roomAllocation}
                     </td>
@@ -123,8 +132,9 @@ export const HowWeWorkPage: React.FC<HowWeWorkPageProps> = ({ onNavigate }) => {
                       </span>
                     </td>
                   </tr>
-                ))}
-              </tbody>
+                );
+              })}
+            </tbody>
             </table>
           </div>
         </div>

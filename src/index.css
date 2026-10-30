@@ -11,9 +11,23 @@
   --make: #7F52A0;
   --status-ok: #2E8B57;
   --status-wait: #E8A317;
-  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--ink);
   background-color: var(--paper);
+}
+
+/* Home-scoped theme tokens (.theme-home) */
+.theme-home {
+  --abyss: #062B2B;
+  --teal: #00857E;
+  --aqua: #2CE0C8;
+  --electric: #2F7BFF;
+  --signal-green: #00F07A;
+  --violet: #7F52A0;
+  --coral: #FF5A36;
+  --sun: #FFC845;
+  --mist: #E6F6F3;
+  --white: #FFFFFF;
 }
 
 @theme {
@@ -27,11 +41,33 @@
   --color-make: #7F52A0;
   --color-status-ok: #2E8B57;
   --color-status-wait: #E8A317;
-  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bebas Neue', sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Bebas Neue', 'DM Sans', sans-serif;
+  letter-spacing: 0.035em;
+  font-weight: 400;
+}
+
+h1 {
+  letter-spacing: 0.025em;
+  line-height: 1.04;
+}
+
+h2 {
+  letter-spacing: 0.03em;
+  line-height: 1.08;
+}
+
+h3 {
+  letter-spacing: 0.035em;
+  line-height: 1.12;
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: 'DM Sans', var(--font-sans);
   background-color: var(--paper);
   color: var(--ink);
   margin: 0;
@@ -44,43 +80,127 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Floor plan drawing animation */
-@keyframes drawStroke {
-  from {
-    stroke-dashoffset: 1200;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
+/* Home-page primary action button with sweep fill */
+.btn-coral {
+  position: relative;
+  background-color: #FF5A36;
+  color: #FFFFFF;
+  border-radius: 4px;
+  overflow: hidden;
+  font-weight: 600;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 1;
 }
 
-@keyframes zoneFadeIn {
+.btn-coral::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: #E24724;
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
+.btn-coral:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-coral:hover span {
+  transform: translateX(2px);
+}
+
+.btn-coral:active {
+  transform: scale(0.98);
+}
+
+/* Secondary link with left-to-right drawing underline */
+.link-draw {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.link-draw::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-draw:hover::after {
+  transform: scaleX(1);
+}
+
+/* Continuous logo drift animation */
+@keyframes logoDriftLeft {
   0% {
-    fill-opacity: 0;
-  }
-  65% {
-    fill-opacity: 0;
+    transform: translateX(0);
   }
   100% {
-    fill-opacity: 0.12;
+    transform: translateX(-50%);
   }
 }
 
-.plan-stroke-wall {
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 0;
-  animation: drawStroke 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes logoDriftRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
-.plan-zone {
-  animation: zoneFadeIn 1.4s ease forwards;
+.animate-drift-left {
+  display: flex;
+  width: max-content;
+  animation: logoDriftLeft 45s linear infinite;
+}
+
+.animate-drift-right {
+  display: flex;
+  width: max-content;
+  animation: logoDriftRight 50s linear infinite;
+}
+
+.animate-drift-slow {
+  display: flex;
+  width: max-content;
+  animation: logoDriftLeft 65s linear infinite;
+}
+
+.pause-on-hover:hover .animate-drift-left,
+.pause-on-hover:hover .animate-drift-right,
+.pause-on-hover:hover .animate-drift-slow {
+  animation-play-state: paused;
+}
+
+/* Custom wave-mask curve for hero image */
+.clip-wave-top {
+  clip-path: path("M 0,40 C 150,0 350,70 600,20 L 600,480 C 450,500 200,450 0,480 Z");
+}
+
+/* Smooth focus visible outline */
+:focus-visible {
+  outline: 2px solid #2CE0C8;
+  outline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .plan-stroke-wall,
-  .plan-zone {
+  .animate-drift-left,
+  .animate-drift-right,
+  .animate-drift-slow {
     animation: none !important;
-    stroke-dashoffset: 0 !important;
-    fill-opacity: 0.12 !important;
+  }
+  .btn-coral::before {
+    display: none;
   }
 }

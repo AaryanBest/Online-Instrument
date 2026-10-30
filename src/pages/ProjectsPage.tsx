@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { projectsData, ProjectSector, Project } from '../content/projects';
 import { ProjectRow } from '../components/sections/ProjectRow';
 import { ContactBand } from '../components/sections/ContactBand';
+import { Logo } from '../components/ui/Logo';
+import { brandToLogoMap } from '../content/logos';
 import { X } from 'lucide-react';
 
 interface ProjectsPageProps {
@@ -100,12 +102,17 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({
             {/* Modal Header */}
             <div className="sticky top-0 bg-[#F6F8F7] border-b border-[#D5DDDB] px-6 py-4 flex items-center justify-between">
               <div>
-                <span className="text-xs uppercase tracking-wider text-[#007A75] font-semibold">
+                <span className="text-xs uppercase tracking-wider text-[#007A75] font-semibold block mb-1">
                   {activeProject.sector} Case Study
                 </span>
-                <h2 id="case-study-title" className="text-2xl font-semibold text-[#10201F] tracking-tight">
-                  {activeProject.client}
-                </h2>
+                <div className="flex items-center gap-3 pt-1">
+                  <Logo
+                    id={brandToLogoMap[activeProject.client] || activeProject.client.toLowerCase().replace(/[^a-z0-9]/g, '')}
+                    tone="light"
+                    className="h-8 max-w-[150px]"
+                  />
+                  <span className="text-xs text-[#54625F] hidden sm:inline">({activeProject.client})</span>
+                </div>
               </div>
               <button
                 onClick={handleCloseDetail}

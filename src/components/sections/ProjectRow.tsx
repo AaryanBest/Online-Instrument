@@ -1,5 +1,7 @@
 import React from 'react';
 import { Project } from '../../content/projects';
+import { Logo } from '../ui/Logo';
+import { brandToLogoMap } from '../../content/logos';
 
 interface ProjectRowProps {
   project: Project;
@@ -7,22 +9,25 @@ interface ProjectRowProps {
 }
 
 export const ProjectRow: React.FC<ProjectRowProps> = ({ project, onSelectProject }) => {
+  const logoId = brandToLogoMap[project.client] || project.client.toLowerCase().replace(/[^a-z0-9]/g, '');
+
   return (
     <article className="py-10 border-b border-[#D5DDDB]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start">
-        {/* Left Column: 1-4: Client, Sector, Room count, Countries */}
-        <div className="lg:col-span-4 space-y-2">
+        {/* Left Column: 1-4: Client Logo, Sector, Room count, Countries */}
+        <div className="lg:col-span-4 space-y-3">
           <div className="flex items-center gap-2">
             <span className="text-xs uppercase tracking-wider text-[#54625F] font-medium">
               {project.sector}
             </span>
           </div>
 
-          <h3 className="text-2xl font-semibold text-[#10201F] tracking-tight">
-            {project.client}
-          </h3>
+          {/* Client Brand Logo */}
+          <div className="py-1 h-12 flex items-center">
+            <Logo id={logoId} tone="light" className="h-8 max-w-[150px]" />
+          </div>
 
-          <div className="text-lg font-semibold text-[#007A75] tabular-nums">
+          <div className="text-xl font-semibold text-[#007A75] tabular-nums">
             {project.rooms} rooms
           </div>
 

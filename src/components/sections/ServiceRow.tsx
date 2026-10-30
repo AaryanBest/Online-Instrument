@@ -1,5 +1,7 @@
 import React from 'react';
 import { ServiceItem } from '../../content/services';
+import { Logo } from '../ui/Logo';
+import { brandToLogoMap } from '../../content/logos';
 
 interface ServiceRowProps {
   service: ServiceItem;
@@ -46,13 +48,17 @@ export const ServiceRow: React.FC<ServiceRowProps> = ({ service, index }) => {
 
           {/* Real Proof / Case study example */}
           <div className="p-4 bg-white border border-[#D5DDDB] rounded-none">
-            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
               <span className="text-xs uppercase tracking-wider font-semibold text-[#007A75]">
                 Real project reference
               </span>
-              <span className="text-xs text-[#54625F] font-medium">
-                {service.proofExample.client}
-              </span>
+              {brandToLogoMap[service.proofExample.client] ? (
+                <Logo id={brandToLogoMap[service.proofExample.client]} tone="light" className="h-6 max-w-[110px]" />
+              ) : (
+                <span className="text-xs text-[#54625F] font-medium">
+                  {service.proofExample.client}
+                </span>
+              )}
             </div>
             <p className="text-sm text-[#10201F] leading-relaxed">
               {service.proofExample.description}

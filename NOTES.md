@@ -29,8 +29,8 @@
 - No consecutive pale sections; 4+ full-saturation sections.
 
 ### Typography
-- Display: `Anybody` (variable font with wide width axis, 700-800 weight) for hero, bold statements, large metrics.
-- Body/UI: `Instrument Sans` (sentence case, max line length 68ch, tabular numerals for figures).
+- Display / Headlines: `Bebas Neue` (condensed, high-impact display font, with tailored letter spacing and line heights) for all headlines (`h1`, `h2`, `h3`, `h4`, `.font-display`) across the entire website.
+- Primary Body / UI: `DM Sans` (for all body text, paragraphs, interactive controls, navigation, and tabular data).
 
 ### Logos & Identity
 - Centralized `<Logo id="..." />` registry (`/content/logos.ts`).
@@ -43,13 +43,14 @@
 - Choreographed 1.8s entrance sequence.
 - 60s slow logo drift carousel under hero.
 
-### Phased Roadmap
-- **H1**: Tokens, fonts, Logo component and registry
-- **H2**: Hero (canvas waves, mask, load sequence, logo row)
-- **H3**: Sections 1 & 2 (editorial statement with inline photos, interactive sector treemap)
-- **H4**: Section 3 (pinned lifecycle with color & scene shifts)
-- **H5**: Sections 4 & 5 (expanding image strips, horizontal poster rail)
-- **H6**: Sections 6 & 7 (rack staging proof with animated bars, dot-matrix office map)
-- **H7**: Sections 8, 9, 10 and footer
-- **H8**: Polish, reduced-motion, accessibility pass & review
+### Implementation Status
+- **H1 Complete**: Home-scoped tokens (`.theme-home`), `Anybody` font setup, unified `<Logo id="..." />` component and `/content/logos.ts` registry.
+- **H2 Complete**: 28-line interactive canvas wave hero, cursor lerp deflection, wave-curve masked photo, 1.8s load sequence, and 60s slow drift client logo rail.
+- **H3 Complete**: Section 1 Editorial statement with inline imagery on `--mist`, and Section 2 interactive sector treemap on `--teal` with number roll to 2,518.
+- **H4 Complete**: Section 3 5-stage sequential lifecycle with background color shifts (Abyss, Electric, Violet, Teal, Coral) and swapping scene previews.
+- **H5 Complete**: Section 4 6-strip expanding spaces showcase with zoom & lift on hover + Section 5 horizontal scrolling poster rail with client logos and large room counts.
+- **H6 Complete**: Section 6 dark rack staging section with animated comparison bars (map section removed per user request).
+- **H7 Complete**: Section 8 opposing partner logo drift rows, Section 9 credentials and trophy card fan with hover straightening, and Section 10 full-bleed coral contact band with magnetic button.
+- **H8 Complete**: Contrast compliance, WCAG visible focus outlines, prefers-reduced-motion fallbacks, zero TypeScript/lint errors.
+
 

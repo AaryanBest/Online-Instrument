@@ -6,6 +6,8 @@ import { TestReportsExcerpt } from '../components/sections/TestReportsExcerpt';
 import { supportIncidentSteps, escalationMatrix } from '../content/process';
 import { solutionsData } from '../content/solutions';
 import { ContactBand } from '../components/sections/ContactBand';
+import { Logo } from '../components/ui/Logo';
+import { brandToLogoMap } from '../content/logos';
 
 interface ServicesPageProps {
   onNavigate: (path: string) => void;
@@ -155,19 +157,22 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onNavigate }) => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {valueAddedServices.managedServices.examples.map((item, i) => (
-                <div key={i} className="p-5 bg-white border border-[#D5DDDB] space-y-2">
-                  <span className="text-xs font-semibold text-[#007A75] uppercase tracking-wider block">
-                    Overseas Managed SLA
-                  </span>
-                  <div className="text-lg font-semibold text-[#10201F]">
-                    {item.client}
+              {valueAddedServices.managedServices.examples.map((item, i) => {
+                const logoId = brandToLogoMap[item.client] || item.client.toLowerCase();
+                return (
+                  <div key={i} className="p-5 bg-white border border-[#D5DDDB] space-y-3">
+                    <span className="text-xs font-semibold text-[#007A75] uppercase tracking-wider block">
+                      Overseas Managed SLA
+                    </span>
+                    <div className="h-8 flex items-center">
+                      <Logo id={logoId} tone="light" className="h-7 max-w-[130px]" />
+                    </div>
+                    <div className="text-xs text-[#54625F] pt-1 border-t border-[#D5DDDB]/60">
+                      Regions: {item.geography}
+                    </div>
                   </div>
-                  <div className="text-xs text-[#54625F]">
-                    Regions: {item.geography}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

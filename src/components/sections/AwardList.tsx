@@ -1,5 +1,7 @@
 import React from 'react';
 import { awardsData } from '../../content/awards';
+import { Logo } from '../ui/Logo';
+import { brandToLogoMap } from '../../content/logos';
 
 export const AwardList: React.FC = () => {
   return (
@@ -34,7 +36,14 @@ export const AwardList: React.FC = () => {
                   {item.award}
                 </td>
                 <td className="py-3 pr-6 text-[#54625F]">
-                  {item.organization}
+                  {brandToLogoMap[item.organization] ? (
+                    <div className="flex items-center gap-2">
+                      <Logo id={brandToLogoMap[item.organization]} tone="light" className="h-5 max-w-[90px]" />
+                      <span className="text-xs text-[#54625F]">({item.organization})</span>
+                    </div>
+                  ) : (
+                    item.organization
+                  )}
                 </td>
                 <td className="py-3 pr-6 text-xs text-[#10201F]">
                   {item.category}

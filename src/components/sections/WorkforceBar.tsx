@@ -1,5 +1,6 @@
 import React from 'react';
 import { companyData } from '../../content/company';
+import { Logo } from '../ui/Logo';
 
 export const WorkforceBar: React.FC = () => {
   const { workforceTeams, totalPeople, gptwRecognition } = companyData;
@@ -58,10 +59,10 @@ export const WorkforceBar: React.FC = () => {
         ))}
       </div>
 
-      {/* Great Place to Work note */}
-      <div className="p-4 bg-white border border-[#D5DDDB] flex items-center gap-4 text-xs sm:text-sm text-[#10201F]">
-        <div className="w-9 h-9 shrink-0 border border-[#007A75] bg-[#007A75]/5 flex items-center justify-center font-bold text-[#007A75]">
-          ★
+      {/* Great Place to Work note with authentic logo */}
+      <div className="p-4 bg-white border border-[#D5DDDB] flex flex-col sm:flex-row sm:items-center gap-4 text-xs sm:text-sm text-[#10201F]">
+        <div className="h-10 shrink-0 flex items-center">
+          <Logo id="greatplacetowork" tone="light" className="h-8 max-w-[110px]" />
         </div>
         <p className="leading-relaxed">
           {gptwRecognition}
