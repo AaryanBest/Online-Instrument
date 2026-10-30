@@ -1,79 +1,31 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 
 interface CoralContactBandProps {
   onNavigate: (path: string) => void;
 }
 
 export const CoralContactBand: React.FC<CoralContactBandProps> = ({ onNavigate }) => {
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
-  const [btnOffset, setBtnOffset] = useState({ x: 0, y: 0 });
-
-  // Magnetic button effect on desktop
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
-    const rect = buttonRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const deltaX = (e.clientX - centerX) * 0.25;
-    const deltaY = (e.clientY - centerY) * 0.25;
-    setBtnOffset({ x: deltaX, y: deltaY });
-  };
-
-  const handleMouseLeave = () => {
-    setBtnOffset({ x: 0, y: 0 });
-  };
-
   return (
-    <section className="relative bg-[#FF5A36] text-white py-24 sm:py-32 overflow-hidden border-t border-[#FF5A36]">
-      {/* Wave lines running through the band in white at low opacity (~15%) */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-15 overflow-hidden"
-        aria-hidden="true"
-      >
-        <svg
-          className="w-full h-full text-white"
-          viewBox="0 0 1000 400"
-          preserveAspectRatio="none"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        >
-          {Array.from({ length: 14 }).map((_, i) => (
-            <path
-              key={i}
-              d={`M -40 ${80 + i * 20} C 250 ${40 + i * 15}, 650 ${120 + i * 25}, 1040 ${70 + i * 18}`}
-            />
-          ))}
-        </svg>
-      </div>
+    <section className="section-pad bg-[#00A99D] text-[#071A1A] text-center border-b-2 border-[#071A1A]">
+      <div className="home-container max-w-[960px] mx-auto space-y-8 flex flex-col items-center">
+        {/* Bebas Headline Centred in Ink */}
+        <h2 className="font-display text-[64px] sm:text-[96px] lg:text-[120px] text-[#071A1A] leading-[0.92] tracking-[0.01em] uppercase">
+          PLANNING A PROJECT?
+        </h2>
 
-      <div className="max-w-[1200px] mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-8 space-y-4">
-            <h2 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.08]">
-              Planning a project?
-            </h2>
-            <p className="text-lg sm:text-xl text-white/90 max-w-[56ch] leading-relaxed">
-              Tell us about the spaces, locations and timeline. A systems engineer will review your brief and return with single-line schematics or preliminary design guidance.
-            </p>
-          </div>
+        {/* One Line Beneath in DM Sans */}
+        <p className="font-sans font-medium text-lg sm:text-2xl text-[#071A1A] max-w-[48ch] leading-relaxed">
+          Discuss specifications, staging timelines, and rollout velocity with our senior engineering team.
+        </p>
 
-          <div className="lg:col-span-4 flex lg:justify-end">
-            {/* Magnetic White Action Button */}
-            <button
-              ref={buttonRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => onNavigate('/contact')}
-              style={{
-                transform: `translate(${btnOffset.x}px, ${btnOffset.y}px)`,
-                transition: 'transform 120ms ease-out',
-              }}
-              className="px-9 py-5 rounded-md bg-white text-[#FF5A36] font-display text-lg font-bold hover:bg-[#062B2B] hover:text-white transition-colors duration-200 shadow-2xl cursor-pointer focus-visible:outline-white focus-visible:outline-offset-4"
-            >
-              Talk to our team →
-            </button>
-          </div>
+        {/* One Coral Button */}
+        <div className="pt-2">
+          <button
+            onClick={() => onNavigate('/contact')}
+            className="btn-coral-pill !text-lg !px-10 !py-4"
+          >
+            Talk to our team
+          </button>
         </div>
       </div>
     </section>

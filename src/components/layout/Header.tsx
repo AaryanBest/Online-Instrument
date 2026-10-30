@@ -17,9 +17,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 16);
+      setIsScrolled(currentScrollY > 80);
 
-      // Hide header on scroll down, show on scroll up
+      // Hide header on scroll down, return on scroll up
       if (currentScrollY > 120 && currentScrollY > lastScrollY) {
         setShowHeader(false);
       } else {
@@ -46,140 +46,147 @@ export const Header: React.FC<HeaderProps> = ({ currentPath, onNavigate }) => {
     setMobileMenuOpen(false);
   };
 
-  const headerBg = isHome
-    ? 'bg-[#062B2B]/95 text-white border-white/10'
-    : 'bg-[#F6F8F7]/95 text-[#10201F] border-[#D5DDDB]';
+  // Header appearance rules per v3 brief:
+  // On home: transparent on teal when at top; solid ink (#071A1A) when scrolled past 80px.
+  // On other pages: solid white/paper background with ink text.
+  let headerClasses = '';
+  if (isHome) {
+    if (isScrolled) {
+      headerClasses = 'bg-[#071A1A] text-white border-b border-white/10 shadow-md';
+    } else {
+      headerClasses = 'bg-transparent text-[#071A1A] border-b border-transparent';
+    }
+  } else {
+    headerClasses = 'bg-[#FFFFFF] text-[#071A1A] border-b border-[#071A1A]/10 shadow-xs';
+  }
+
+  const isHeaderDark = isHome ? isScrolled : false;
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 backdrop-blur-md border-b ${headerBg} ${
-        isScrolled ? 'shadow-[0_4px_20px_rgba(0,0,0,0.18)]' : ''
-      } ${showHeader ? 'translate-y-0' : '-translate-y-full'}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 ${headerClasses} ${
+        showHeader ? 'translate-y-0' : '-translate-y-full'
+      }`}
     >
-      <div className="max-w-[1200px] mx-auto px-6 h-20 flex items-center justify-between">
-        {/* Brand identity */}
+      <div className="max-w-[1320px] mx-auto px-5 lg:px-10 h-20 flex items-center justify-between">
+        {/* Brand mark */}
         <a
           href="/"
           onClick={(e) => handleNavClick(e, '/')}
-          className="flex items-center gap-3 group focus-visible:outline-[#2CE0C8] focus-visible:outline-offset-4"
+          className="flex items-center gap-3 group focus-visible:outline-[#FF5A36] focus-visible:outline-offset-4"
           aria-label="Online Instruments - Home"
         >
-          {/* Subtle architectural wave logo icon */}
+          {/* Wave SVG Logo Mark */}
           <div
-            className={`w-9 h-9 rounded-sm border flex items-center justify-center font-semibold text-xs tracking-tighter transition-colors ${
-              isHome
-                ? 'border-[#2CE0C8] bg-[#00857E]/30 text-[#2CE0C8]'
-                : 'border-[#007A75] bg-[#007A75]/5 text-[#007A75]'
+            className={`w-9 h-9 flex items-center justify-center font-bold text-xs transition-colors ${
+              isHeaderDark
+                ? 'bg-white/10 text-[#00A99D]'
+                : 'bg-[#071A1A]/10 text-[#071A1A]'
             }`}
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 12c3-4 6-4 9 0s6 4 9 0" strokeLinecap="round" />
-              <path d="M3 16c3-4 6-4 9 0s6 4 9 0" strokeLinecap="round" strokeOpacity="0.5" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M2 12c3-4 6-4 9 0s6 4 9 0" strokeLinecap="round" />
+              <path d="M2 16c3-4 6-4 9 0s6 4 9 0" strokeLinecap="round" strokeOpacity="0.5" />
             </svg>
           </div>
           <div className="flex flex-col">
             <span
-              className={`font-semibold text-base tracking-tight leading-tight ${
-                isHome ? 'text-white' : 'text-[#10201F]'
+              className={`font-bold text-lg tracking-tight leading-tight ${
+                isHeaderDark ? 'text-white' : 'text-[#071A1A]'
               }`}
             >
               Online Instruments
             </span>
-            <span
-              className={`text-xs tracking-normal ${
-                isHome ? 'text-white/60' : 'text-[#54625F]'
-              }`}
-            >
-              Audio-visual system integration · Est. 2006
-            </span>
           </div>
         </a>
 
-        {/* Desktop Navigation with drawn underlines */}
+        {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8" aria-label="Main Navigation">
           {navItems.map((item) => {
-            const isActive = currentPath === item.path || (item.path !== '/' && currentPath.startsWith(item.path));
+            const isActive = currentPath === item.path;
             return (
               <a
                 key={item.path}
                 href={item.path}
                 onClick={(e) => handleNavClick(e, item.path)}
-                className={`text-[15px] transition-colors py-1 relative link-draw ${
-                  isActive
-                    ? isHome ? 'text-[#2CE0C8] font-semibold' : 'text-[#007A75] font-semibold'
-                    : isHome ? 'text-white/80 hover:text-white' : 'text-[#54625F] hover:text-[#10201F]'
+                className={`text-base font-bold transition-colors relative py-1 focus-visible:outline-[#FF5A36] focus-visible:outline-offset-2 ${
+                  isHeaderDark
+                    ? isActive
+                      ? 'text-[#00A99D]'
+                      : 'text-white/80 hover:text-white'
+                    : isActive
+                      ? 'text-[#071A1A]'
+                      : 'text-[#071A1A]/80 hover:text-[#071A1A]'
                 }`}
               >
                 {item.label}
+                {isActive && (
+                  <span
+                    className={`absolute bottom-0 left-0 w-full h-[2px] ${
+                      isHeaderDark ? 'bg-[#00A99D]' : 'bg-[#071A1A]'
+                    }`}
+                  />
+                )}
               </a>
             );
           })}
         </nav>
 
-        {/* CTA Button */}
-        <div className="hidden md:flex items-center">
+        {/* Primary Action Button (Coral pill) */}
+        <div className="hidden md:flex items-center gap-4">
           <button
-            onClick={(e) => handleNavClick(e, '/contact')}
-            className={`rounded-[4px] px-5 py-2.5 text-sm font-semibold transition-all duration-200 cursor-pointer ${
-              isHome
-                ? 'bg-[#FF5A36] text-white hover:bg-[#E24724] active:scale-95'
-                : 'bg-[#007A75] text-[#F6F8F7] hover:bg-[#006965]'
-            }`}
+            onClick={() => onNavigate('/contact')}
+            className="btn-coral-pill !px-6 !py-2.5 !text-sm cursor-pointer"
           >
-            Contact us
+            Talk to our team
           </button>
         </div>
 
-        {/* Mobile menu trigger */}
-        <div className="flex md:hidden items-center">
+        {/* Mobile menu hamburger */}
+        <div className="md:hidden flex items-center gap-3">
           <button
-            type="button"
+            onClick={() => onNavigate('/contact')}
+            className="btn-coral-pill !px-4 !py-1.5 !text-xs cursor-pointer"
+          >
+            Contact
+          </button>
+          <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`p-2 ${isHome ? 'text-white' : 'text-[#10201F]'}`}
+            className={`p-2 transition-colors ${
+              isHeaderDark ? 'text-white hover:text-[#00A99D]' : 'text-[#071A1A] hover:text-[#00A99D]'
+            }`}
+            aria-label={mobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
             aria-expanded={mobileMenuOpen}
-            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile dropdown */}
       {mobileMenuOpen && (
-        <div
-          className={`md:hidden border-t px-6 py-6 space-y-4 ${
-            isHome ? 'bg-[#062B2B] border-white/10 text-white' : 'bg-[#F6F8F7] border-[#D5DDDB] text-[#10201F]'
-          }`}
-        >
-          <nav className="flex flex-col space-y-3" aria-label="Mobile Navigation">
-            {navItems.map((item) => {
-              const isActive = currentPath === item.path;
-              return (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  onClick={(e) => handleNavClick(e, item.path)}
-                  className={`text-base py-2 border-b ${
-                    isHome ? 'border-white/10' : 'border-[#D5DDDB]/50'
-                  } ${
-                    isActive
-                      ? isHome ? 'text-[#2CE0C8] font-semibold' : 'text-[#007A75] font-semibold'
-                      : isHome ? 'text-white' : 'text-[#10201F]'
-                  }`}
-                >
-                  {item.label}
-                </a>
-              );
-            })}
+        <div className="md:hidden bg-[#071A1A] text-white border-t border-white/10 px-6 py-6 space-y-4">
+          <nav className="flex flex-col space-y-3">
+            {navItems.map((item) => (
+              <a
+                key={item.path}
+                href={item.path}
+                onClick={(e) => handleNavClick(e, item.path)}
+                className="text-lg font-bold text-white/90 hover:text-[#00A99D] py-1 border-b border-white/5"
+              >
+                {item.label}
+              </a>
+            ))}
           </nav>
           <div className="pt-2">
             <button
-              onClick={(e) => handleNavClick(e, '/contact')}
-              className={`w-full rounded-[4px] py-3 text-center text-sm font-semibold ${
-                isHome ? 'bg-[#FF5A36] text-white' : 'bg-[#007A75] text-[#F6F8F7]'
-              }`}
+              onClick={() => {
+                onNavigate('/contact');
+                setMobileMenuOpen(false);
+              }}
+              className="w-full btn-coral-pill cursor-pointer"
             >
-              Contact us
+              Talk to our team
             </button>
           </div>
         </div>

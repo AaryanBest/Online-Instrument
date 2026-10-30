@@ -1,206 +1,217 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #10201F;
+  --ink: #071A1A;
+  --teal: #00A99D;
+  --white: #FFFFFF;
+  --coral: #FF5A36;
+  --coral-dark: #E04522;
+  --ink-70: rgba(7, 26, 26, 0.7);
+  --white-70: rgba(255, 255, 255, 0.7);
+
+  /* Legacy page fallbacks for inner reading pages (About, Services, etc.) */
   --paper: #F6F8F7;
-  --teal: #007A75;
-  --signal: #2CCFC0;
   --slate: #54625F;
   --rule: #D5DDDB;
-  --logic: #4F81BD;
-  --make: #7F52A0;
-  --status-ok: #2E8B57;
-  --status-wait: #E8A317;
+
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   color: var(--ink);
-  background-color: var(--paper);
-}
-
-/* Home-scoped theme tokens (.theme-home) */
-.theme-home {
-  --abyss: #062B2B;
-  --teal: #00857E;
-  --aqua: #2CE0C8;
-  --electric: #2F7BFF;
-  --signal-green: #00F07A;
-  --violet: #7F52A0;
-  --coral: #FF5A36;
-  --sun: #FFC845;
-  --mist: #E6F6F3;
-  --white: #FFFFFF;
+  background-color: var(--white);
 }
 
 @theme {
-  --color-ink: #10201F;
-  --color-paper: #F6F8F7;
-  --color-teal: #007A75;
-  --color-signal: #2CCFC0;
-  --color-slate: #54625F;
-  --color-rule: #D5DDDB;
-  --color-logic: #4F81BD;
-  --color-make: #7F52A0;
-  --color-status-ok: #2E8B57;
-  --color-status-wait: #E8A317;
+  --color-ink: #071A1A;
+  --color-teal: #00A99D;
+  --color-white: #FFFFFF;
+  --color-coral: #FF5A36;
+  --color-ink-70: rgba(7, 26, 26, 0.7);
+  --color-white-70: rgba(255, 255, 255, 0.7);
   --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Bebas Neue', sans-serif;
 }
 
-h1, h2, h3, h4, .font-display {
-  font-family: 'Bebas Neue', 'DM Sans', sans-serif;
-  letter-spacing: 0.035em;
-  font-weight: 400;
-}
-
-h1 {
-  letter-spacing: 0.025em;
-  line-height: 1.04;
-}
-
-h2 {
-  letter-spacing: 0.03em;
-  line-height: 1.08;
-}
-
-h3 {
-  letter-spacing: 0.035em;
-  line-height: 1.12;
-}
-
+/* Base typography */
 body {
   font-family: 'DM Sans', var(--font-sans);
-  background-color: var(--paper);
-  color: var(--ink);
+  background-color: #071A1A;
+  color: #071A1A;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Headings and Bebas display */
+h1, h2, h3, h4, .font-display {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.01em;
+  line-height: 0.92;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Home-page primary action button with sweep fill */
-.btn-coral {
-  position: relative;
-  background-color: #FF5A36;
-  color: #FFFFFF;
-  border-radius: 4px;
-  overflow: hidden;
-  font-weight: 600;
-  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 1;
+/* Strict Spacing Scale Containers */
+.home-container {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.btn-coral::before {
+@media (min-width: 1024px) {
+  .home-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+/* Home Section Rhythm Base */
+.section-pad {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+@media (min-width: 1024px) {
+  .section-pad {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
+}
+
+/* Primary Action Pill Button: Coral background, ink text, pill (rounded-full) */
+.btn-coral-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FF5A36;
+  color: #071A1A;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  padding: 16px 32px;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  cursor: pointer;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.btn-coral-pill::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background-color: #E24724;
-  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  background-color: #E04522;
+  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
   z-index: -1;
 }
 
-.btn-coral:hover::before {
+.btn-coral-pill:hover::before {
   transform: translateX(100%);
 }
 
-.btn-coral:hover span {
-  transform: translateX(2px);
+.btn-coral-pill:active {
+  transform: translateY(2px);
 }
 
-.btn-coral:active {
-  transform: scale(0.98);
+.btn-coral-pill:focus-visible {
+  outline: 3px solid #FF5A36;
+  outline-offset: 3px;
 }
 
-/* Secondary link with left-to-right drawing underline */
-.link-draw {
+/* Text links with drawn underline (DM Sans) */
+.link-draw-ink {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  color: #071A1A;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.link-draw::after {
+.link-draw-ink::after {
   content: '';
   position: absolute;
   bottom: -2px;
   left: 0;
   width: 100%;
-  height: 1.5px;
-  background-color: currentColor;
-  transform: scaleX(0);
+  height: 2px;
+  background-color: #071A1A;
+  transform: scaleX(1);
   transform-origin: left;
-  transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.link-draw:hover::after {
+.link-draw-ink:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.link-draw-white {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: #FFFFFF;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link-draw-white::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #00A99D;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-draw-white:hover::after {
   transform: scaleX(1);
 }
 
-/* Continuous logo drift animation */
-@keyframes logoDriftLeft {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
+/* Wave line draw-in keyframe */
+@keyframes drawStroke {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
-@keyframes logoDriftRight {
-  0% {
-    transform: translateX(-50%);
-  }
-  100% {
-    transform: translateX(0);
-  }
+.wave-draw-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: drawStroke 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
-.animate-drift-left {
-  display: flex;
-  width: max-content;
-  animation: logoDriftLeft 45s linear infinite;
-}
-
-.animate-drift-right {
-  display: flex;
-  width: max-content;
-  animation: logoDriftRight 50s linear infinite;
-}
-
-.animate-drift-slow {
-  display: flex;
-  width: max-content;
-  animation: logoDriftLeft 65s linear infinite;
-}
-
-.pause-on-hover:hover .animate-drift-left,
-.pause-on-hover:hover .animate-drift-right,
-.pause-on-hover:hover .animate-drift-slow {
-  animation-play-state: paused;
-}
-
-/* Custom wave-mask curve for hero image */
-.clip-wave-top {
-  clip-path: path("M 0,40 C 150,0 350,70 600,20 L 600,480 C 450,500 200,450 0,480 Z");
-}
-
-/* Smooth focus visible outline */
-:focus-visible {
-  outline: 2px solid #2CE0C8;
-  outline-offset: 3px;
-}
-
+/* Reduced motion overrides */
 @media (prefers-reduced-motion: reduce) {
-  .animate-drift-left,
-  .animate-drift-right,
-  .animate-drift-slow {
+  .wave-draw-line {
+    stroke-dashoffset: 0 !important;
     animation: none !important;
   }
-  .btn-coral::before {
-    display: none;
+  .btn-coral-pill,
+  .btn-coral-pill::before,
+  .link-draw-ink::after,
+  .link-draw-white::after {
+    transition: none !important;
   }
 }

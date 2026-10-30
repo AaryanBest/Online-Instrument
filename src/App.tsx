@@ -178,7 +178,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F6F8F7] text-[#10201F]">
+    <div className={`min-h-screen flex flex-col ${currentPath === '/' ? 'bg-[#071A1A] text-[#071A1A]' : 'bg-[#F6F8F7] text-[#10201F]'}`}>
       <Header currentPath={currentPath} onNavigate={navigateTo} />
       <main className="flex-1">
         {renderCurrentPage()}
